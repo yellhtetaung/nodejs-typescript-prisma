@@ -119,8 +119,8 @@ var init_users_route = __esm({
     "use strict";
     init_users_controller();
     router = Router();
-    router.route("/users").get(getAllUsers).post(createUser);
-    router.route("/users/:id").get(getUserById).put(updateUser).delete(deleteUser);
+    router.route("/").get(getAllUsers).post(createUser);
+    router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
     users_route_default = router;
   }
 });
@@ -133,7 +133,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 dotenv.config();
 var app = express();
-var port = process.env.PORT || 8001;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -151,11 +150,11 @@ app.get("/", (req, res) => {
     </html>
   `);
 });
-app.use("/api", (init_users_route(), __toCommonJS(users_route_exports)).default);
+app.use("/api/users", (init_users_route(), __toCommonJS(users_route_exports)).default);
 var app_default = app;
 
 // src/index.ts
-var port2 = process.env.PORT || 8001;
-app_default.listen(port2, () => {
-  console.log(`Server is running on port \u{1F449} ${port2}`);
+var port = process.env.PORT || 8001;
+app_default.listen(port, () => {
+  console.log(`Server is running on port \u{1F449} ${port}`);
 });
