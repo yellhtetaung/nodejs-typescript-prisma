@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { Users } from "./types/users.types";
 
 const prisma = new PrismaClient();
 
@@ -37,7 +36,7 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
 	try {
-		const { username, email, password, role, image } = req.body as Users;
+		const { username, email, password, role, image } = req.body;
 
 		const existingUser = await prisma.users.findUnique({
 			where: {
@@ -70,7 +69,7 @@ export const createUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
 	try {
 		const id: string = req.params.id;
-		const { username, email, password, role }: Users = req.body;
+		const { username, email, password, role } = req.body;
 
 		const user = await prisma.users.update({
 			where: { id: id },
