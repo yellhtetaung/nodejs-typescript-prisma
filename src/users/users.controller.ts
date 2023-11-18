@@ -6,14 +6,14 @@ const prisma = new PrismaClient();
 
 export const getAllUsers = async (req: Request, res: Response) => {
 	try {
-		const users: Users[] = await prisma.users.findMany();
+		const users = await prisma.users.findMany();
 
 		if (users.length === 0) {
 			return res.status(404).json({ message: "User not found" });
 		}
 
 		return res.status(200).json(users);
-	} catch (error) {
+	} catch (error: any) {
 		return res.status(500).json({ message: error.message });
 	}
 };
@@ -30,7 +30,7 @@ export const getUserById = async (req: Request, res: Response) => {
 		}
 
 		res.status(200).json(user);
-	} catch (error) {
+	} catch (error: any) {
 		res.status(500).json({ message: error.message });
 	}
 };
@@ -62,7 +62,7 @@ export const createUser = async (req: Request, res: Response) => {
 		});
 
 		res.status(201).json(newUser);
-	} catch (error) {
+	} catch (error: any) {
 		res.status(500).json({ message: error.message });
 	}
 };
@@ -83,7 +83,7 @@ export const updateUser = async (req: Request, res: Response) => {
 		});
 
 		res.status(200).json(user);
-	} catch (error) {
+	} catch (error: any) {
 		res.status(500).json({ message: error.message });
 	}
 };
@@ -95,7 +95,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 		await prisma.users.delete({ where: { id } });
 
 		res.status(200).json({ message: "User deleted successfully" });
-	} catch (error) {
+	} catch (error: any) {
 		res.status(500).json({ message: error.message });
 	}
 };
