@@ -12,11 +12,7 @@ const port = process.env.PORT || 8001;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(
-	cors({
-		credentials: true,
-	})
-);
+app.use(cors());
 
 app.get("/", (req: express.Request, res: express.Response) => {
 	res.status(200).send(`
@@ -32,6 +28,6 @@ app.get("/", (req: express.Request, res: express.Response) => {
   `);
 });
 
-app.use("/api", require("./users/users.router").default);
+app.use("/api", require("./users/users.route").default);
 
 export default app;
