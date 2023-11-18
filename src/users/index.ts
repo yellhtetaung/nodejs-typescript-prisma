@@ -1,2 +1,2 @@
-export * from "./users.route";
+export * from "./users.router";
 export * from "./users.controller";
