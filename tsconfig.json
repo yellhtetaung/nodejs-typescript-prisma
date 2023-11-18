@@ -1,11 +1,13 @@
 {
 	"compilerOptions": {
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
-		"baseUrl": "src",
-		"outDir": "dist",
+		"module": "CommonJS",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "ES6",
+		"moduleResolution": "Node",
 		"sourceMap": true,
-		"noImplicitAny": true
+		"outDir": "dist",
+		"baseUrl": "."
 	},
 	"include": ["src/**/*"]
 }
