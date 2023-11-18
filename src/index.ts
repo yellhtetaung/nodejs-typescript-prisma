@@ -36,3 +36,5 @@ app.get("/", (req: express.Request, res: express.Response) => {
 app.use("/api", router());
 
 app.listen(port, () => console.log(`Server is listening on port 👉 ${port}`));
+
+export default app;
