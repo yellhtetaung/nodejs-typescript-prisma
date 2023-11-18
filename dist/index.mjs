@@ -21,7 +21,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 
 // src/users/users.controller.ts
 import { PrismaClient } from "@prisma/client";
-var prisma, getAllUsers, getUserById, createUser, updateUser, deleteUser;
+var prisma, getAllUsers, getSingleUser, createUser, updateUser, deleteUser;
 var init_users_controller = __esm({
   "src/users/users.controller.ts"() {
     "use strict";
@@ -37,10 +37,12 @@ var init_users_controller = __esm({
         return res.status(500).json({ message: error.message });
       }
     };
-    getUserById = async (req, res) => {
+    getSingleUser = async (req, res) => {
       try {
-        const id = req.params.id;
-        const user = await prisma.users.findUnique({ where: { id } });
+        const { username, email, id } = req.query;
+        let user = await prisma.users.findUnique({
+          where: { username, email, id }
+        });
         if (!user) {
           res.status(404).json({ message: "User not found" });
           return;
@@ -120,7 +122,8 @@ var init_users_route = __esm({
     init_users_controller();
     router = Router();
     router.route("/").get(getAllUsers).post(createUser);
-    router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
+    router.route("/:id").put(updateUser).delete(deleteUser);
+    router.route("/search").get(getSingleUser);
     users_route_default = router;
   }
 });

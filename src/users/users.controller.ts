@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 
+import { User, SingleUser } from "./users.types";
+
 const prisma = new PrismaClient();
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -17,11 +19,13 @@ export const getAllUsers = async (req: Request, res: Response) => {
 	}
 };
 
-export const getUserById = async (req: Request, res: Response) => {
+export const getSingleUser = async (req: Request, res: Response) => {
 	try {
-		const id: string = req.params.id;
+		const { username, email, id } = req.query as unknown as SingleUser;
 
-		const user = await prisma.users.findUnique({ where: { id } });
+		let user = await prisma.users.findUnique({
+			where: { username, email, id },
+		});
 
 		if (!user) {
 			res.status(404).json({ message: "User not found" });
@@ -36,7 +40,7 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
 	try {
-		const { username, email, password, role, image } = req.body;
+		const { username, email, password, role, image }: User = req.body;
 
 		const existingUser = await prisma.users.findUnique({
 			where: {
@@ -69,7 +73,7 @@ export const createUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
 	try {
 		const id: string = req.params.id;
-		const { username, email, password, role } = req.body;
+		const { username, email, password, role }: User = req.body;
 
 		const user = await prisma.users.update({
 			where: { id: id },
